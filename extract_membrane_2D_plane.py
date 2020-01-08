@@ -2,19 +2,14 @@
 #This script extracts the set of lipid and cholesterol atoms exist in a predifined 2D surface
 #Utilzed in the line tension calculations published in J. Chem. Phys. 150, 204702 (2019); https://doi.org/10.1063/1.5091450
 #Example usage python extract_membrane_plane.py 1 up #[replicate trajectory] [top(up) or bottom (down) leaflet to analyze]
+#This script utilizes the MDAnalysis API to read the GROMACS simulation trajectoy data
 from __future__ import division
 import numpy as np
-import pylab as pl
 import math
 from MDAnalysis import *
 import MDAnalysis
-import MDAnalysis.lib.distances # Previously, this was MDAnalysis.core.distances
-import pylab as pl
+import MDAnalysis.lib.distances
 import MDAnalysis.lib.NeighborSearch as NS
-from sklearn.cluster import DBSCAN
-from scipy.spatial.distance import pdist,squareform
-import scipy.interpolate as inter
-from scipy.stats import binned_statistic
 import multiprocessing as mp
 import sys
 
@@ -26,7 +21,6 @@ runindex = sys.argv[1] # replicates 1, 2, 3
 side     = sys.argv[2] # up for upper leaflet, down for lower leaflet
 
 ###############INPUTS######################################
-# MDAnalysisInputs
 print "Loading inputs..."
 replicateindex = int(runindex)
 psf  = '../../step5_assembly.psf'
